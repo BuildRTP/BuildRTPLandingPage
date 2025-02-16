@@ -8,7 +8,7 @@ export default function AboutSection() {
             </div>
             <div>
               <p className="text-lg text-foreground/70">
-                something something something
+                BuildRTP is the first space in the Research Triangle Park area for passionate and driven high schoolers to work on making their dreams a reality while being surrounded by a community of like-minded individuals that  
               </p>
             </div>
           </div>
