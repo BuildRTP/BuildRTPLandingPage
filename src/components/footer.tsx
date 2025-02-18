@@ -3,6 +3,7 @@ import { Github, Instagram, Linkedin, Mail } from "lucide-react"
 
 export default function Footer() {
   return (
+    <section id="footer">
     <footer className="bg-mainblue text-white py-12">
       <div className="container">
         <div className="grid md:grid-cols-2 gap-8">
@@ -13,10 +14,12 @@ export default function Footer() {
           <div className="flex flex-col md:items-end gap-4">
             <h3 className="text-xl font-bold">Connect With Us</h3>
             <div className="flex gap-4">
-              <Link href="#" className="hover:text-secondary transition-colors">
+              <Link href="https://www.instagram.com/buildrtp?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" className="hover:text-secondary transition-colors">
                 <Instagram className="w-6 h-6" />
                 <span className="sr-only">Instagram</span>
               </Link>
+              {/*Uncomment when need more links added */}
+              {/*
               <Link href="#" className="hover:text-secondary transition-colors">
                 <Linkedin className="w-6 h-6" />
                 <span className="sr-only">LinkedIn</span>
@@ -25,16 +28,18 @@ export default function Footer() {
                 <Github className="w-6 h-6" />
                 <span className="sr-only">GitHub</span>
               </Link>
-              <Link href="mailto:contact@buildrtp.com" className="hover:text-secondary transition-colors">
+*/}
+              <Link href="mailto:team@buildrtp.com" className="hover:text-secondary transition-colors">
                 <Mail className="w-6 h-6" />
                 <span className="sr-only">Email</span>
               </Link>
             </div>
-            <p className="text-background/80">team@buildrtp.com</p>
+            <p className="text-background/80">team@buildrtp.org</p>
           </div>
         </div>
       </div>
     </footer>
+    </section>
   )
 }
 
