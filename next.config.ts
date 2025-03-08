@@ -1,7 +1,15 @@
-import type { NextConfig } from "next";
+import { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  async redirects() {
+    return [
+      {
+        source: '/sponsors',
+        destination: 'https://docs.google.com/document/d/1dEY-37KGgcW4orksnGiifpjXin3b1-TKJriyyuOiOiQ/edit?usp=sharing', 
+        permanent: false, 
+      },
+    ];
+  },
 };
 
 export default nextConfig;
