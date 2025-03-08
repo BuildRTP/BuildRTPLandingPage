@@ -3,6 +3,7 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 
 export default function SponsorsSection() {
+
   const sponsors: Record<"platinum" | "gold" | "silver" | "bronze", { name: string; logo?: string }[]> = {
     platinum: [
       { name: "ThinkSabio", logo: "/logos/platinum1.png" },
@@ -14,7 +15,7 @@ export default function SponsorsSection() {
       // { name: "Gold Sponsor 3", logo: "/logos/gold3.png" },
     ],
     silver: [
-      { name: "Your Company Here!", logo: undefined },
+      { name: "Wize Computing Academy", logo: "/logos/silver1.webp" },
       // { name: "Silver Sponsor 2", logo: "/logos/silver2.png" },
       // { name: "Silver Sponsor 3", logo: "/logos/silver3.png" },
       // { name: "Silver Sponsor 4", logo: "/logos/silver4.png" },
@@ -36,14 +37,14 @@ export default function SponsorsSection() {
   }
 
   return (
-    <section id="sponsors" className="py-24 bg-primary-dark/5">
+    <section id="sponsors" className="py-12 bg-primary-dark/5">
       <div className="container text-center">
         <h2 className="text-3xl font-bold text-mainblue mb-12">Our Sponsors</h2>
 
         {/* New section for supporting */}
         <div className="mb-16">
           <p className="text-lg mb-6">
-            Join our community of sponsors and help students across the area achieve their goals.
+            Join our community of sponsors and help students across the RTP area achieve their goals.
           </p>
           <Button className="bg-mainblue hover:scale-110 hover:shadow-xl shadow-lg transition-all hover:bg-secondaryblue text-white">
             <Link href="https://docs.google.com/document/d/1dEY-37KGgcW4orksnGiifpjXin3b1-TKJriyyuOiOiQ/edit?tab=t.0#heading=h.rp20ohikcijx" target="_blank" rel="noopener noreferrer">
@@ -63,7 +64,7 @@ export default function SponsorsSection() {
                 {sponsorsList.map((sponsor, i) => (
                   <div
                     key={i}
-                    className="w-40 h-24 bg-background border border-primary-dark/20 rounded-lg flex flex-col items-center justify-center p-4 overflow-hidden"
+                    className="w-40  bg-background border border-primary-dark/20 rounded-lg flex flex-col items-center justify-center p-4 "
                   >
                     {/* If a logo exists, show it. */}
                     {sponsor.logo && (
