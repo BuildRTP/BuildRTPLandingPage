@@ -16,13 +16,13 @@ export default function SponsorsSection() {
     ],
     silver: [
       { name: "Wize Computing Academy", logo: "/logos/silver1.webp" },
-      // { name: "Silver Sponsor 2", logo: "/logos/silver2.png" },
+      //{ name: "Silver Sponsor 2", logo: "/logos/silver2.png" },
       // { name: "Silver Sponsor 3", logo: "/logos/silver3.png" },
       // { name: "Silver Sponsor 4", logo: "/logos/silver4.png" },
     ],
     bronze: [
       { name: "Cactus Capital", logo: "/logos/bronze1.png" },
-      // { name: "Bronze Sponsor 2", logo: "/logos/bronze2.png" },
+      { name: "Smitprint", logo: "/logos/bronze2.jpg" },
       // { name: "Bronze Sponsor 3", logo: "/logos/bronze3.png" },
       // { name: "Bronze Sponsor 4", logo: "/logos/bronze4.png" },
       // { name: "Bronze Sponsor 5", logo: "/logos/bronze5.png" },
@@ -64,20 +64,24 @@ export default function SponsorsSection() {
                 {sponsorsList.map((sponsor, i) => (
                   <div
                     key={i}
-                    className="w-40  bg-background border border-primary-dark/20 rounded-lg flex flex-col items-center justify-center p-4 "
+                    className="w-40 h-48 bg-background border border-primary-dark/20 rounded-lg flex flex-col p-4 relative"
                   >
-                    {/* If a logo exists, show it. */}
-                    {sponsor.logo && (
-                      <Image
-                        src={sponsor.logo || "/placeholder.svg"}
-                        alt={sponsor.name}
-                        width={140}
-                        height={96}
-                        className="max-h-full max-w-full object-contain mb-2"
-                      />
-                    )}
-                    {/* Always show the name. */}
-                    <p className="text-center">{sponsor.name}</p>
+                    {/* Image container with fixed height */}
+                    <div className="flex-grow flex items-center justify-center">
+                      {sponsor.logo && (
+                        <Image
+                          src={sponsor.logo || "/placeholder.svg"}
+                          alt={sponsor.name}
+                          width={140}
+                          height={96}
+                          className="max-h-full max-w-full object-contain"
+                        />
+                      )}
+                    </div>
+                    {/* Text container at bottom */}
+                    <div className="mt-auto">
+                      <p className="text-center">{sponsor.name}</p>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -88,4 +92,3 @@ export default function SponsorsSection() {
     </section>
   )
 }
-
