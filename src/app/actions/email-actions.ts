@@ -9,7 +9,7 @@ const emailSchema = z.object({
 })
 
 // Initialize Resend with API key
-const resend = new Resend("re_imFfaSj4_4KTorJDARth52w2bTfTkp8JG")
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function subscribeToNewsletter(formData: FormData) {
   try {
