@@ -24,7 +24,7 @@ export default function EmailSignup() {
       } else {
         setMessage({ text: result.message, isError: true })
       }
-    } catch (error) {
+    } catch {
       setMessage({
         text: "Something went wrong. Please try again later.",
         isError: true,
