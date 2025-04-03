@@ -50,6 +50,7 @@ export async function subscribeToNewsletter(formData: FormData) {
           <p>We're excited to have you on board and will keep you updated on upcoming events, workshops, and opportunities.</p>
           <p>Stay creative and keep building!</p>
           <p>The BuildRTP Team</p>
+          <p>team@buildrtp.org</p>
           <div class="logo-container" style="text-align: center; margin-top: 20px;">
             <img 
               src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/2831129e6166b73890168ea5e863fec1bde7c86e_buildrtp_logo_instagram_post__1_.png" 
