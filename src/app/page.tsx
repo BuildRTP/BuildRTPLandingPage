@@ -4,6 +4,7 @@ import EventCard from "@/components/event-card"
 import AboutSection from "@/components/about-section"
 import SponsorsSection from "@/components/sponsors-section"
 import Footer from "@/components/footer"
+import EmailSignup from "@/components/email-signup"
 
 export default function Home() {
   return (
@@ -11,14 +12,14 @@ export default function Home() {
       <Header />
       <main className="relative">
         <HeroSection />
-
+        <EmailSignup />
         <EventCard
           eventType="HACKATHON"
-          title="Scrapyard RTP"
-          date="March 16th - 8AM to 8PM"
+          title="Girls Who Code"
+          date="May 24th - Time TBD"
           location="5310 S Alston Ave. STE 200, Durham, NC 27713"
-          description="Join us for 12 hours of building with workshops, free food, and cash prizes! Form teams of up to 3 people and try to create a stupid solution to a real world problem."
-          signupUrl="https://scrapyard.hackclub.com/rtp"
+          description="More details coming soon!"
+          signupUrl="https://buildrtp.org"
         />
         <AboutSection />
         <SponsorsSection />
