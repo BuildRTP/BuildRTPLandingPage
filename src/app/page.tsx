@@ -13,12 +13,12 @@ export default function Home() {
         <HeroSection />
 
         <EventCard
-          eventType="HACKATHON"
-          title="Scrapyard RTP"
-          date="March 16th - 8AM to 8PM"
+          eventType="PITCH COMPETITION"
+          title="LaunchUP"
+          date="Saturday, August 10th - 12:30PM to 6PM"
           location="5310 S Alston Ave. STE 200, Durham, NC 27713"
-          description="Join us for 12 hours of building with workshops, free food, and cash prizes! Form teams of up to 3 people and try to create a stupid solution to a real world problem."
-          signupUrl="https://scrapyard.hackclub.com/rtp"
+          description="Join us for a pitch competition with thousands in prize money! Come in with any ideas, with a team of up to 4 people and get feedback from judges with decades of experience!"
+          signupUrl="https://buildrtp.org"
         />
         <AboutSection />
         <SponsorsSection />
