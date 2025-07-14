@@ -16,7 +16,7 @@ export default function LaunchUPPage() {
             <div className="text-center text-white">
               <h1 className="text-4xl md:text-6xl font-bold mb-6">LaunchUP</h1>
               <p className="text-xl md:text-2xl mb-8 opacity-90">
-                BuildRTP's Premier Pitch Competition
+                BuildRTP&apos;s Premier Pitch Competition
               </p>
               <div className="flex flex-wrap justify-center gap-4 text-lg">
                 <div className="flex items-center gap-2">
@@ -29,7 +29,7 @@ export default function LaunchUPPage() {
                 </div>
                 <div className="flex items-center gap-2">
                   <MapPin className="w-5 h-5" />
-                  <span>BuildRTP Office, Durham NC</span>
+                  <span>5310 S Alston Ave. STE210, Durham, NC 27713</span>
                 </div>
               </div>
             </div>
@@ -43,7 +43,7 @@ export default function LaunchUPPage() {
               <div>
                 <h2 className="text-3xl font-bold text-mainblue mb-6">What is LaunchUP?</h2>
                 <p className="text-lg text-foreground/80 mb-6">
-                  LaunchUP is BuildRTP's flagship pitch competition where high school students can bring their innovative ideas to life. Whether you're a solo entrepreneur or part of a team, this is your chance to present your vision to seed investors who serve as our judges and compete for thousands in prize money.
+                  LaunchUP is BuildRTP&apos;s flagship pitch competition where high school students can bring their innovative ideas to life. Whether you&apos;re a solo entrepreneur or part of a team, this is your chance to present your vision to seed investors who serve as our judges and compete for thousands in prize money.
                 </p>
                 <p className="text-lg text-foreground/80">
                   Come with any idea - from tech startups to social impact initiatives. Our panel of seed investor judges with decades of experience will provide valuable feedback to help you refine your concept and take it to the next level. Winners gain direct access to investor support that will help push their company forward and turn their ideas into reality.
@@ -139,7 +139,7 @@ export default function LaunchUPPage() {
                     Located in the heart of Research Triangle Park, our office provides the perfect environment for innovation and collaboration.
                   </p>
                   <p className="text-sm text-muted-foreground">
-                    Parking is available on-site. The building is accessible and we'll have clear signage to guide you to our suite.
+                    Parking is available on-site. The building is accessible and we&apos;ll have clear signage to guide you to our suite.
                   </p>
                 </CardContent>
               </Card>
@@ -149,7 +149,7 @@ export default function LaunchUPPage() {
             <div className="text-center">
               <h2 className="text-3xl font-bold text-mainblue mb-6">Ready to Launch Your Idea?</h2>
               <p className="text-lg text-foreground/80 mb-8 max-w-2xl mx-auto">
-                Don't miss this opportunity to showcase your innovation, receive feedback from seed investors, compete for up to $5,000 in prizes, and gain direct investor support to push your company forward. Registration is free and open to all high school students.
+                Don&apos;t miss this opportunity to showcase your innovation, receive feedback from seed investors, compete for up to $5,000 in prizes, and gain direct investor support to push your company forward. Registration is free and open to all high school students.
               </p>
               <Button size="lg" className="bg-orange hover:bg-secondaryblue text-white text-lg px-8 py-4">
                 <Link href="https://tally.so/r/w40ZJk" target="_blank" rel="noopener noreferrer">
