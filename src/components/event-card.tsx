@@ -47,9 +47,7 @@ export default function EventCard2({
 
         {/* Signup Button */}
         <Link
-          href={signupUrl}
-          target="_blank"
-          rel="noopener noreferrer"
+          href="/launchup"
           className="absolute -right-4 top-1/2 -translate-y-1/2 md:-right-6"
         >
           <Button

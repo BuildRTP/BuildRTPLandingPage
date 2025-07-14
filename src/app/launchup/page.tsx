@@ -152,7 +152,7 @@ export default function LaunchUPPage() {
                 Don't miss this opportunity to showcase your innovation, receive feedback from seed investors, compete for up to $5,000 in prizes, and gain direct investor support to push your company forward. Registration is free and open to all high school students.
               </p>
               <Button size="lg" className="bg-orange hover:bg-secondaryblue text-white text-lg px-8 py-4">
-                <Link href="https://buildrtp.org" target="_blank" rel="noopener noreferrer">
+                <Link href="https://tally.so/r/w40ZJk" target="_blank" rel="noopener noreferrer">
                   Register for LaunchUP
                 </Link>
               </Button>
