@@ -21,7 +21,7 @@ export default function LaunchUPPage() {
               <div className="flex flex-wrap justify-center gap-4 text-lg">
                 <div className="flex items-center gap-2">
                   <Calendar className="w-5 h-5" />
-                  <span>Saturday, August 10th</span>
+                  <span>Sunday, August 10th</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Clock className="w-5 h-5" />
