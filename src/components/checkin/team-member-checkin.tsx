@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent } from '@/components/ui/card'
-import { CheckInStore } from '@/lib/checkin-store'
+import { CheckInClient } from '@/lib/checkin-client'
 import { TeamMemberCheckIn as TeamMemberCheckInType, TeamMember } from '@/types/checkin'
 import { CheckCircle, Lock, UserCheck, LogOut } from 'lucide-react'
 
@@ -17,16 +17,23 @@ export default function TeamMemberCheckIn() {
   const [checkInId, setCheckInId] = useState<string>('')
   const [isCheckedIn, setIsCheckedIn] = useState(false)
 
-  const handlePasswordSubmit = (e: React.FormEvent) => {
+  const handlePasswordSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
-    const store = CheckInStore.getInstance()
-    if (store.validateAdminPassword(password)) {
-      const members = store.getTeamMembers()
-      setTeamMembers(members)
-      setStep('select')
-    } else {
-      alert('Invalid password. Please contact admin.')
+    try {
+      const client = CheckInClient.getInstance()
+      const isValid = await client.validateTeamPassword(password)
+      
+      if (isValid) {
+        const members = await client.getTeamMembers()
+        setTeamMembers(members)
+        setStep('select')
+      } else {
+        alert('Invalid password. Please contact admin.')
+      }
+    } catch (error) {
+      console.error('Password validation error:', error)
+      alert('Unable to validate password. Please check your internet connection.')
     }
   }
 
@@ -34,34 +41,44 @@ export default function TeamMemberCheckIn() {
     setSelectedMember(member)
   }
 
-  const handleCheckIn = () => {
+  const handleCheckIn = async () => {
     if (!selectedMember) return
 
-    const store = CheckInStore.getInstance()
-    const checkIn = store.addCheckIn({
-      type: 'team',
-      memberName: selectedMember.name,
-      memberId: selectedMember.id
-    } as Omit<TeamMemberCheckInType, 'id' | 'timestamp'>)
-    
-    setCheckInId(checkIn.id)
-    setIsCheckedIn(true)
-    setStep('success')
+    try {
+      const client = CheckInClient.getInstance()
+      const checkIn = await client.addCheckIn({
+        type: 'team',
+        memberName: selectedMember.name,
+        memberId: selectedMember.id
+      } as Omit<TeamMemberCheckInType, 'id' | 'timestamp'>)
+      
+      setCheckInId(checkIn.id)
+      setIsCheckedIn(true)
+      setStep('success')
+    } catch (error) {
+      console.error('Check-in error:', error)
+      alert('Check-in failed. Please check your internet connection and try again.')
+    }
   }
 
-  const handleCheckOut = () => {
-    const store = CheckInStore.getInstance()
-    const success = store.checkOut(checkInId)
-    
-    if (success) {
-      alert('Successfully checked out!')
-      setStep('password')
-      setPassword('')
-      setSelectedMember(null)
-      setIsCheckedIn(false)
-      setCheckInId('')
-    } else {
-      alert('Check-out failed. Please contact admin.')
+  const handleCheckOut = async () => {
+    try {
+      const client = CheckInClient.getInstance()
+      const success = await client.checkOut(checkInId)
+      
+      if (success) {
+        alert('Successfully checked out!')
+        setStep('password')
+        setPassword('')
+        setSelectedMember(null)
+        setIsCheckedIn(false)
+        setCheckInId('')
+      } else {
+        alert('Check-out failed. Please contact admin.')
+      }
+    } catch (error) {
+      console.error('Check-out error:', error)
+      alert('Check-out failed. Please check your internet connection and try again.')
     }
   }
 

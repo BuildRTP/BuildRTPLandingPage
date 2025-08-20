@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Card, CardContent } from '@/components/ui/card'
-import { CheckInStore } from '@/lib/checkin-store'
+import { CheckInClient } from '@/lib/checkin-client'
 import { VisitorCheckIn as VisitorCheckInType } from '@/types/checkin'
 import { CheckCircle, User } from 'lucide-react'
 
@@ -39,8 +39,8 @@ export default function VisitorCheckIn() {
     setIsSubmitting(true)
     
     try {
-      const store = CheckInStore.getInstance()
-      const checkIn = store.addCheckIn({
+      const client = CheckInClient.getInstance()
+      const checkIn = await client.addCheckIn({
         type: 'visitor',
         firstName: formData.firstName.trim(),
         lastName: formData.lastName.trim(),
@@ -64,26 +64,31 @@ export default function VisitorCheckIn() {
           email: '',
           phone: ''
         })
-      }, 3000)
+      }, 5000)
       
     } catch (error) {
       console.error('Check-in failed:', error)
-      alert('Check-in failed. Please try again.')
+      alert('Check-in failed. Please check your internet connection and try again.')
     } finally {
       setIsSubmitting(false)
     }
   }
 
-  const handleCheckOut = () => {
-    const store = CheckInStore.getInstance()
-    const success = store.checkOut(checkInId)
-    
-    if (success) {
-      alert('Successfully checked out!')
-      setIsSuccess(false)
-      setCheckInId('')
-    } else {
-      alert('Check-out failed. Please contact admin.')
+  const handleCheckOut = async () => {
+    try {
+      const client = CheckInClient.getInstance()
+      const success = await client.checkOut(checkInId)
+      
+      if (success) {
+        alert('Successfully checked out!')
+        setIsSuccess(false)
+        setCheckInId('')
+      } else {
+        alert('Check-out failed. Please contact admin.')
+      }
+    } catch (error) {
+      console.error('Check-out error:', error)
+      alert('Check-out failed. Please check your internet connection and try again.')
     }
   }
 

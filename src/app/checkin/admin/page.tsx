@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/badge'
-import { CheckInStore } from '@/lib/checkin-store'
+import { CheckInClient } from '@/lib/checkin-client'
 import { CheckIn, VisitorCheckIn, TeamMemberCheckIn } from '@/types/checkin'
 import { 
   Users, 
@@ -35,36 +35,53 @@ export default function AdminDashboard() {
     }
   }, [isAuthenticated])
 
-  const loadData = () => {
-    const store = CheckInStore.getInstance()
-    const allCheckIns = store.getCheckIns()
-    const activeOnes = store.getActiveCheckIns()
-    
-    setCheckIns(allCheckIns.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()))
-    setActiveCheckIns(activeOnes)
-  }
-
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault()
-    const store = CheckInStore.getInstance()
-    
-    if (store.validateAdminPassword(password)) {
-      setIsAuthenticated(true)
-      loadData()
-    } else {
-      alert('Invalid admin password')
+  const loadData = async () => {
+    try {
+      const client = CheckInClient.getInstance()
+      const allCheckIns = await client.getCheckIns()
+      const activeOnes = await client.getActiveCheckIns()
+      
+      setCheckIns(allCheckIns)
+      setActiveCheckIns(activeOnes)
+    } catch (error) {
+      console.error('Failed to load data:', error)
+      alert('Failed to load check-in data. Please check your internet connection.')
     }
   }
 
-  const handleCheckOut = (checkInId: string) => {
-    const store = CheckInStore.getInstance()
-    const success = store.checkOut(checkInId)
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault()
     
-    if (success) {
-      loadData()
-      alert('Successfully checked out!')
-    } else {
-      alert('Check-out failed')
+    try {
+      const client = CheckInClient.getInstance()
+      const isValid = await client.validateAdminPassword(password)
+      
+      if (isValid) {
+        setIsAuthenticated(true)
+        await loadData()
+      } else {
+        alert('Invalid admin password')
+      }
+    } catch (error) {
+      console.error('Login error:', error)
+      alert('Unable to authenticate. Please check your internet connection.')
+    }
+  }
+
+  const handleCheckOut = async (checkInId: string) => {
+    try {
+      const client = CheckInClient.getInstance()
+      const success = await client.checkOut(checkInId)
+      
+      if (success) {
+        await loadData()
+        alert('Successfully checked out!')
+      } else {
+        alert('Check-out failed')
+      }
+    } catch (error) {
+      console.error('Check-out error:', error)
+      alert('Check-out failed. Please check your internet connection.')
     }
   }
 
