@@ -55,6 +55,12 @@ export default function Header() {
             >
               Sponsors
             </button>
+            <Link
+              href="/checkin"
+              className="text-gray-600 hover:text-mainblue transition-colors"
+            >
+              Check-In
+            </Link>
             <button
               onClick={() => scrollToSection("footer")}
               className="text-gray-600 hover:text-mainblue transition-colors"
