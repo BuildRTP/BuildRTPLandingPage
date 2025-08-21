@@ -8,3 +8,10 @@ export async function GET() {
     apiKey: process.env.AIRTABLE_API_KEY?.substring(0, 8) + '...',
   })
 }
+
+export async function POST(request: Request) {
+  const { firstName, lastName } = await request.json()
+  return NextResponse.json({
+    message: `Hello, ${firstName} ${lastName}!`
+  })
+}

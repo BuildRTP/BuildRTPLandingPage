@@ -11,7 +11,7 @@ const base = Airtable.base(process.env.NEXT_PUBLIC_AIRTABLE_BASE_ID!)
 
 export async function GET() {
   try {
-    const records = await base('Team-members').select({
+    const records = await base('TeamMembers').select({
       filterByFormula: 'active = TRUE()',
       sort: [{ field: 'name', direction: 'asc' }]
     }).all()
