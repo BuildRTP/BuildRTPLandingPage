@@ -28,7 +28,8 @@ export interface EventCheckIn extends BaseCheckIn {
 
 export interface TeamMemberCheckIn extends BaseCheckIn {
   type: 'team'
-  memberName: string
+  firstName: string,
+  lastName: string,
   memberId: string
 }
 

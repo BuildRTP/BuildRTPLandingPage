@@ -32,7 +32,8 @@ function convertToCheckIn(record: any): CheckIn {
     return {
       ...base,
       type: 'team',
-      memberName: record.fields.memberName || '',
+      firstName: record.fields.firstName || '',
+      lastName: record.fields.lastName || '',
       memberId: record.fields.memberId || ''
     } as TeamMemberCheckIn
   } else {
@@ -104,7 +105,8 @@ export async function POST(request: NextRequest) {
       if (checkInData.email) fields.email = checkInData.email
       if (checkInData.phone) fields.phone = checkInData.phone
     } else if (checkInData.type === 'team') {
-      fields.memberName = checkInData.memberName
+      fields.firstName = checkInData.firstName
+      fields.lastName = checkInData.lastName
       fields.memberId = checkInData.memberId
     } else if (checkInData.type === 'event') {
       fields.eventId = checkInData.eventId

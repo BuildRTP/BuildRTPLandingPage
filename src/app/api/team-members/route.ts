@@ -34,3 +34,7 @@ export async function GET() {
     return NextResponse.json(defaultMembers)
   }
 }
+
+export async function POST(request: Request) {
+
+}

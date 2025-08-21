@@ -48,7 +48,8 @@ export default function TeamMemberCheckIn() {
       const client = CheckInClient.getInstance()
       const checkIn = await client.addCheckIn({
         type: 'team',
-        memberName: selectedMember.name,
+        firstName: selectedMember.name,
+        lastName: selectedMember.name,
         memberId: selectedMember.id
       } as Omit<TeamMemberCheckInType, 'id' | 'timestamp'>)
       

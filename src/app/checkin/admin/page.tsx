@@ -276,7 +276,7 @@ export default function AdminDashboard() {
                       <div className="flex items-center justify-between mb-2">
                         <div className="font-medium">
                           {checkIn.type === 'visitor' && `${(checkIn as VisitorCheckIn).firstName} ${(checkIn as VisitorCheckIn).lastName}`}
-                          {checkIn.type === 'team' && (checkIn as TeamMemberCheckIn).memberName}
+                          {checkIn.type === 'team' && `${(checkIn as TeamMemberCheckIn).firstName} ${(checkIn as TeamMemberCheckIn).lastName}`}
                           {checkIn.type === 'event' && 'Event Attendee'}
                         </div>
                         {getTypeBadge(checkIn.type)}
@@ -350,7 +350,7 @@ export default function AdminDashboard() {
                         <div className="flex items-center gap-3">
                           <div className="font-medium">
                             {checkIn.type === 'visitor' && `${(checkIn as VisitorCheckIn).firstName} ${(checkIn as VisitorCheckIn).lastName}`}
-                            {checkIn.type === 'team' && (checkIn as TeamMemberCheckIn).memberName}
+                            {checkIn.type === 'team' && `${(checkIn as TeamMemberCheckIn).firstName} ${(checkIn as TeamMemberCheckIn).lastName}`}
                             {checkIn.type === 'event' && 'Event Attendee'}
                           </div>
                           {getTypeBadge(checkIn.type)}

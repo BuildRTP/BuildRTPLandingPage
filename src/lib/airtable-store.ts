@@ -12,7 +12,7 @@ interface AirtableCheckInRecord {
     checkOutTime?: string
     firstName?: string
     lastName?: string
-    memberName?: string
+
     memberId?: string
     eventId?: string
     company?: string
@@ -107,7 +107,8 @@ export class AirtableCheckInStore {
         if (visitor.phone) fields.phone = visitor.phone
       } else if (checkIn.type === 'team') {
         const team = checkIn as Omit<TeamMemberCheckIn, 'id' | 'timestamp'>
-        fields.memberName = team.memberName
+        fields.firstName = team.firstName
+        fields.lastName = team.lastName
         fields.memberId = team.memberId
       } else if (checkIn.type === 'event') {
         const event = checkIn as Omit<EventCheckIn, 'id' | 'timestamp'>
@@ -351,7 +352,8 @@ export class AirtableCheckInStore {
       return {
         ...base,
         type: 'team',
-        memberName: record.fields.memberName || '',
+        firstName: record.fields.firstName || '',
+        lastName: record.fields.lastName || '',
         memberId: record.fields.memberId || ''
       } as TeamMemberCheckIn
     } else {

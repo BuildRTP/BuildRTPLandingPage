@@ -15,7 +15,6 @@ Create a new Airtable base with the following tables:
 | `checkOutTime` | Date and time | Include time (optional) |
 | `firstName` | Single line text | |
 | `lastName` | Single line text | |
-| `memberName` | Single line text | For team check-ins |
 | `memberId` | Single line text | For team check-ins |
 | `eventId` | Single line text | For event check-ins |
 | `company` | Single line text | Optional |
