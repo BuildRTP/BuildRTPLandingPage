@@ -6,92 +6,140 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent } from '@/components/ui/card'
 import { CheckInClient } from '@/lib/checkin-client'
-import { TeamMemberCheckIn as TeamMemberCheckInType, TeamMember } from '@/types/checkin'
-import { CheckCircle, Lock, UserCheck, LogOut } from 'lucide-react'
+import { TeamMember } from '@/types/checkin'
+import {
+  CheckCircle,
+  Eye, EyeOff,
+  Loader2,
+  Lock,
+  LogOut,
+  UserCheck
+} from 'lucide-react'
+
+type Step = 'teamPassword' | 'select' | 'memberPassword' | 'success'
 
 export default function TeamMemberCheckIn() {
-  const [step, setStep] = useState<'password' | 'select' | 'success'>('password')
-  const [password, setPassword] = useState('')
-  const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null)
-  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([])
-  const [checkInId, setCheckInId] = useState<string>('')
-  const [isCheckedIn, setIsCheckedIn] = useState(false)
+  const [step, setStep] = useState<Step>('teamPassword')
 
-  const handlePasswordSubmit = async (e: React.FormEvent) => {
+  // team gate
+  const [teamPassword, setTeamPassword] = useState('')
+  const [validatingTeam, setValidatingTeam] = useState(false)
+
+  // members
+  const [members, setMembers] = useState<TeamMember[]>([])
+  const [loadingMembers, setLoadingMembers] = useState(false)
+  const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null)
+
+  // per-member password
+  const [memberPassword, setMemberPassword] = useState('')
+  const [showMemberPw, setShowMemberPw] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+
+  // outcome
+  const [checkInId, setCheckInId] = useState('')
+  const [status, setStatus] = useState<string>('')
+
+  const resetAll = () => {
+    setStep('teamPassword')
+    setTeamPassword('')
+    setMembers([])
+    setSelectedMember(null)
+    setMemberPassword('')
+    setShowMemberPw(false)
+    setSubmitting(false)
+    setCheckInId('')
+    setStatus('')
+  }
+
+  // 1) Validate shared team password, then load members
+  const handleTeamPasswordSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    
+    setStatus('')
     try {
+      setValidatingTeam(true)
       const client = CheckInClient.getInstance()
-      const isValid = await client.validateTeamPassword(password)
-      
-      if (isValid) {
-        const members = await client.getTeamMembers()
-        setTeamMembers(members)
-        setStep('select')
-      } else {
-        alert('Invalid password. Please contact admin.')
+
+      // Your app already had this:
+      const ok = await client.validateTeamPassword(teamPassword.trim())
+      if (!ok) {
+        setStatus('Invalid team password.')
+        return
       }
-    } catch (error) {
-      console.error('Password validation error:', error)
-      alert('Unable to validate password. Please check your internet connection.')
+
+      // Load members only after secret is validated to avoid SSR hydration diff
+      setLoadingMembers(true)
+      const list = await client.getTeamMembers()
+      setMembers(Array.isArray(list) ? list.filter(m => m.active) : [])
+      setStep('select')
+    } catch (err: any) {
+      console.error(err)
+      setStatus(err?.message || 'Unable to validate. Check connection.')
+    } finally {
+      setValidatingTeam(false)
+      setLoadingMembers(false)
     }
   }
 
-  const handleMemberSelect = (member: TeamMember) => {
-    setSelectedMember(member)
+  // 2) Select member → go to memberPassword step
+  const handleSelect = (m: TeamMember) => {
+    setSelectedMember(m)
+    setMemberPassword('')
+    setStatus('')
+    setStep('memberPassword')
   }
 
-  const handleCheckIn = async () => {
+  // 3) Verify per-member password (server) and create check-in
+  const handleMemberCheckIn = async () => {
     if (!selectedMember) return
-
+    if (!memberPassword.trim()) {
+      setStatus('Please enter your password.')
+      return
+    }
     try {
-      const client = CheckInClient.getInstance()
-      const checkIn = await client.addCheckIn({
-        type: 'team',
-        firstName: selectedMember.name,
-        lastName: selectedMember.name,
-        memberId: selectedMember.id
-      } as Omit<TeamMemberCheckInType, 'id' | 'timestamp'>)
-      
-      setCheckInId(checkIn.id)
-      setIsCheckedIn(true)
+      setSubmitting(true)
+      setStatus('')
+      const res = await fetch('/api/team-members', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          memberId: selectedMember.id,
+          password: memberPassword.trim()
+        })
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        setStatus(data?.error || 'Check-in failed.')
+        return
+      }
+      setCheckInId(data.id)
       setStep('success')
-    } catch (error) {
-      console.error('Check-in error:', error)
-      alert('Check-in failed. Please check your internet connection and try again.')
+    } catch (err: any) {
+      console.error(err)
+      setStatus(err?.message || 'Network error.')
+    } finally {
+      setSubmitting(false)
     }
   }
 
   const handleCheckOut = async () => {
     try {
       const client = CheckInClient.getInstance()
-      const success = await client.checkOut(checkInId)
-      
-      if (success) {
-        alert('Successfully checked out!')
-        setStep('password')
-        setPassword('')
-        setSelectedMember(null)
-        setIsCheckedIn(false)
-        setCheckInId('')
+      const ok = await client.checkOut(checkInId)
+      if (ok) {
+        setStatus('Checked out successfully.')
+        resetAll()
       } else {
-        alert('Check-out failed. Please contact admin.')
+        setStatus('Check-out failed.')
       }
-    } catch (error) {
-      console.error('Check-out error:', error)
-      alert('Check-out failed. Please check your internet connection and try again.')
+    } catch (err: any) {
+      console.error(err)
+      setStatus(err?.message || 'Check-out failed.')
     }
   }
 
-  const reset = () => {
-    setStep('password')
-    setPassword('')
-    setSelectedMember(null)
-    setIsCheckedIn(false)
-    setCheckInId('')
-  }
+  // ---------- RENDER ----------
 
-  if (step === 'password') {
+  if (step === 'teamPassword') {
     return (
       <div className="space-y-6">
         <Card className="bg-blue-50 border-blue-200">
@@ -101,36 +149,39 @@ export default function TeamMemberCheckIn() {
               <h3 className="text-lg font-semibold text-blue-800">Team Member Access</h3>
             </div>
             <p className="text-blue-700 mb-4">
-              Enter the team password to access the member list.
+              Enter the team password to view the member list.
             </p>
           </CardContent>
         </Card>
 
-        <form onSubmit={handlePasswordSubmit} className="space-y-4">
+        <form onSubmit={handleTeamPasswordSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="password" className="text-sm font-medium">
-              Team Password
-            </Label>
+            <Label htmlFor="teamPassword">Team Password</Label>
             <Input
-              id="password"
+              id="teamPassword"
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={teamPassword}
+              onChange={(e) => setTeamPassword(e.target.value)}
               placeholder="Enter team password"
               required
-              className="w-full"
             />
           </div>
-          
-          <Button 
-            type="submit" 
-            disabled={!password.trim()}
+
+          <Button
+            type="submit"
+            disabled={!teamPassword.trim() || validatingTeam}
             className="w-full bg-mainblue hover:bg-secondaryblue text-white"
           >
-            <Lock className="w-4 h-4 mr-2" />
+            {validatingTeam ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Lock className="w-4 h-4 mr-2" />}
             Access Team Check-In
           </Button>
         </form>
+
+        {status && (
+          <Card className="border border-gray-200">
+            <CardContent className="py-3 text-sm">{status}</CardContent>
+          </Card>
+        )}
       </div>
     )
   }
@@ -140,49 +191,90 @@ export default function TeamMemberCheckIn() {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <h3 className="text-lg font-semibold">Select Your Name</h3>
-          <Button variant="outline" size="sm" onClick={reset}>
-            Back
-          </Button>
+          <Button variant="outline" size="sm" onClick={resetAll}>Back</Button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {teamMembers.filter(m => m.active).map((member) => (
-            <Button
-              key={member.id}
-              variant={selectedMember?.id === member.id ? "default" : "outline"}
-              onClick={() => handleMemberSelect(member)}
-              className="h-auto p-4 text-left justify-start"
-            >
-              <UserCheck className="w-5 h-5 mr-3" />
-              {member.name}
-            </Button>
-          ))}
-        </div>
+        {loadingMembers ? (
+          <div className="flex items-center gap-2 text-gray-600">
+            <Loader2 className="h-4 w-4 animate-spin" /> Loading team members…
+          </div>
+        ) : members.length === 0 ? (
+          <p className="text-sm text-gray-600">No active team members found.</p>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {members.map((m) => (
+              <Button
+                key={m.id}
+                variant={selectedMember?.id === m.id ? 'default' : 'outline'}
+                onClick={() => handleSelect(m)}
+                className="h-auto p-4 text-left justify-start"
+              >
+                <UserCheck className="w-5 h-5 mr-3" />
+                {m.name}
+              </Button>
+            ))}
+          </div>
+        )}
 
-        {selectedMember && (
-          <Card className="bg-green-50 border-green-200">
-            <CardContent className="pt-6">
-              <div className="text-center">
-                <UserCheck className="w-12 h-12 text-green-600 mx-auto mb-3" />
-                <h4 className="text-lg font-semibold text-green-800 mb-2">
-                  Welcome, {selectedMember.name}!
-                </h4>
-                <Button 
-                  onClick={handleCheckIn}
-                  className="bg-green-600 hover:bg-green-700 text-white"
-                >
-                  <UserCheck className="w-4 h-4 mr-2" />
-                  Check In
-                </Button>
-              </div>
-            </CardContent>
+        {status && (
+          <Card className="border border-gray-200">
+            <CardContent className="py-3 text-sm">{status}</CardContent>
           </Card>
         )}
       </div>
     )
   }
 
-  if (step === 'success' && isCheckedIn) {
+  if (step === 'memberPassword' && selectedMember) {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h3 className="text-lg font-semibold">
+            Checking in as <span className="text-mainblue">{selectedMember.name}</span>
+          </h3>
+          <Button variant="outline" size="sm" onClick={() => setStep('select')}>Back</Button>
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="memberPassword">Your Password</Label>
+          <div className="relative">
+            <Input
+              id="memberPassword"
+              type={showMemberPw ? 'text' : 'password'}
+              placeholder="Enter your password"
+              value={memberPassword}
+              onChange={(e) => setMemberPassword(e.target.value)}
+              disabled={submitting}
+            />
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              className="absolute right-0 top-0 h-full px-3"
+              onClick={() => setShowMemberPw(s => !s)}
+              disabled={submitting}
+              aria-label={showMemberPw ? 'Hide password' : 'Show password'}
+            >
+              {showMemberPw ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+            </Button>
+          </div>
+        </div>
+
+        <Button onClick={handleMemberCheckIn} disabled={submitting || !memberPassword.trim()}>
+          {submitting ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : null}
+          Check In
+        </Button>
+
+        {status && (
+          <Card className="border border-gray-200">
+            <CardContent className="py-3 text-sm">{status}</CardContent>
+          </Card>
+        )}
+      </div>
+    )
+  }
+
+  if (step === 'success') {
     return (
       <Card className="bg-green-50 border-green-200">
         <CardContent className="pt-6">
@@ -191,29 +283,21 @@ export default function TeamMemberCheckIn() {
             <h3 className="text-xl font-semibold text-green-800 mb-2">
               Welcome back, {selectedMember?.name}!
             </h3>
-            <p className="text-green-700 mb-6">
-              You&apos;re now checked in to BuildRTP.
-            </p>
+            <p className="text-green-700 mb-6">You&apos;re now checked in.</p>
             <div className="space-y-3">
-              <Button 
+              <Button
                 onClick={handleCheckOut}
-                variant="outline" 
+                variant="outline"
                 className="border-green-600 text-green-600 hover:bg-green-600 hover:text-white"
               >
                 <LogOut className="w-4 h-4 mr-2" />
                 Check Out
               </Button>
-              <div>
-                <Button 
-                  onClick={reset}
-                  variant="ghost" 
-                  size="sm"
-                  className="text-green-600"
-                >
-                  Check In Someone Else
-                </Button>
-              </div>
+              <Button variant="ghost" size="sm" onClick={resetAll} className="text-green-600">
+                Check In Someone Else
+              </Button>
             </div>
+            {status && <p className="mt-3 text-sm text-gray-700">{status}</p>}
           </div>
         </CardContent>
       </Card>
