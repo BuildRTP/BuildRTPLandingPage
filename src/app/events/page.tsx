@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { Suspense, useMemo, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import Header from '../../components/header'
@@ -73,15 +73,13 @@ function HeroBanner() {
   return (
     <section className="relative w-full h-[68vh] md:h-[72vh] flex items-center justify-center text-white">
       <Image
-        src="/events/hero-bg.jpg" // put your image at /public/events/hero-bg.jpg
+        src="/events/hero-bg.jpg"
         alt="BuildRTP Events Hero"
         fill
         priority
         className="object-cover"
       />
-      {/* nice cinematic tint */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/55 to-black/70" />
-      {/* diagonal brand stripe */}
       <div className="absolute -left-20 -top-24 rotate-6 w-[140%] h-32 bg-mainblue/20 blur-[2px]" />
 
       <div className="relative z-10 text-center px-4">
@@ -113,122 +111,7 @@ function HeroBanner() {
   )
 }
 
-/* =====================  PAGE  ===================== */
-
-export default function EventsPage() {
-  const router = useRouter()
-  const params = useSearchParams()
-  const initialTab = (params.get('tab') || 'upcoming') as 'upcoming' | 'past'
-
-  const [activeTab, setActiveTab] = useState<'upcoming' | 'past'>(initialTab)
-  const [q, setQ] = useState('')
-  const [activeTags, setActiveTags] = useState<EventTag[]>([])
-
-  const now = new Date()
-  const events = useMemo(() => {
-    const filtered = SAMPLE_EVENTS.filter((e) => {
-      const hay = (e.title + ' ' + e.description + ' ' + e.location).toLowerCase()
-      const matchesQuery = q ? hay.includes(q.toLowerCase()) : true
-      const matchesTags = activeTags.length ? activeTags.every((t) => e.tags.includes(t)) : true
-      return matchesQuery && matchesTags
-    })
-    return filtered.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
-  }, [q, activeTags])
-
-  const upcoming = events.filter((e) => new Date(e.date) >= now)
-  const past = events.filter((e) => new Date(e.date) < now)
-  const tagOptions: EventTag[] = ['workshop', 'pitch', 'networking', 'info', 'social']
-
-  const handleTab = (tab: 'upcoming' | 'past') => {
-    setActiveTab(tab)
-    const sp = new URLSearchParams(params.toString())
-    sp.set('tab', tab)
-    router.push(`/events?${sp.toString()}`)
-  }
-
-  return (
-    <>
-      <Header />
-      <HeroBanner />
-
-      {/* Brand-tinted background for main content */}
-      <div className="bg-[linear-gradient(180deg,rgba(15,23,42,0.03)_0%,rgba(15,23,42,0.00)_100%)]">
-        <div className="pt-10 pb-16">
-          <div className="container max-w-5xl" id="events-list">
-            {/* Controls */}
-            <Card className="mb-8 border-mainblue/10 shadow-sm">
-              <CardContent className="pt-6">
-                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                  {/* Tabs */}
-                  <div className="flex items-center gap-2">
-                    <Button
-                      variant={activeTab === 'upcoming' ? 'default' : 'outline'}
-                      onClick={() => handleTab('upcoming')}
-                      className={activeTab === 'upcoming' ? 'bg-mainblue' : ''}
-                    >
-                      Upcoming
-                    </Button>
-                    <Button
-                      variant={activeTab === 'past' ? 'default' : 'outline'}
-                      onClick={() => handleTab('past')}
-                      className={activeTab === 'past' ? 'bg-mainblue' : ''}
-                    >
-                      Past
-                    </Button>
-                  </div>
-
-                  {/* Search + Tags */}
-                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-                    <Input
-                      placeholder="Search events…"
-                      value={q}
-                      onChange={(e) => setQ(e.target.value)}
-                      className="w-64"
-                    />
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <Badge variant="secondary" className="flex items-center gap-1 bg-black/80 text-white">
-                        <Filter className="w-3.5 h-3.5" /> Tags
-                      </Badge>
-                      {tagOptions.map((t) => {
-                        const on = activeTags.includes(t)
-                        return (
-                          <Button
-                            key={t}
-                            size="sm"
-                            variant={on ? 'default' : 'outline'}
-                            onClick={() =>
-                              setActiveTags((prev) => (on ? prev.filter((x) => x !== t) : [...prev, t]))
-                            }
-                            className={`capitalize ${on ? 'bg-mainblue' : ''}`}
-                          >
-                            {t}
-                          </Button>
-                        )
-                      })}
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Listing */}
-            {activeTab === 'upcoming' && (
-              <EventList items={upcoming} emptyMessage="No upcoming events match your filters." />
-            )}
-            {activeTab === 'past' && (
-              <EventList items={past} emptyMessage="No past events found with these filters." />
-            )}
-          </div>
-
-          {/* =====================  PAST EVENTS SHOWCASE  ===================== */}
-          <PastEventsShowcaseSection />
-        </div>
-      </div>
-    </>
-  )
-}
-
-/* =====================  EVENT CARDS  ===================== */
+/* =====================  EVENT CARDS (moved above use)  ===================== */
 
 function EventList({ items, emptyMessage }: { items: EventItem[]; emptyMessage: string }) {
   if (!items.length) {
@@ -441,5 +324,122 @@ function ShowcaseSlider({ images }: { images: string[] }) {
         ))}
       </div>
     </div>
+  )
+}
+
+/* =====================  PAGE (Suspense around search params)  ===================== */
+
+export default function EventsPage() {
+  return (
+    <Suspense fallback={<div className="p-10 text-center">Loading events...</div>}>
+      <EventsPageContent />
+    </Suspense>
+  )
+}
+
+function EventsPageContent() {
+  const router = useRouter()
+  const params = useSearchParams()
+  const initialTab = (params.get('tab') || 'upcoming') as 'upcoming' | 'past'
+
+  const [activeTab, setActiveTab] = useState<'upcoming' | 'past'>(initialTab)
+  const [q, setQ] = useState('')
+  const [activeTags, setActiveTags] = useState<EventTag[]>([])
+
+  const now = new Date()
+  const events = useMemo(() => {
+    const filtered = SAMPLE_EVENTS.filter((e) => {
+      const hay = (e.title + ' ' + e.description + ' ' + e.location).toLowerCase()
+      const matchesQuery = q ? hay.includes(q.toLowerCase()) : true
+      const matchesTags = activeTags.length ? activeTags.every((t) => e.tags.includes(t)) : true
+      return matchesQuery && matchesTags
+    })
+    return filtered.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+  }, [q, activeTags])
+
+  const upcoming = events.filter((e) => new Date(e.date) >= now)
+  const past = events.filter((e) => new Date(e.date) < now)
+  const tagOptions: EventTag[] = ['workshop', 'pitch', 'networking', 'info', 'social']
+
+  const handleTab = (tab: 'upcoming' | 'past') => {
+    setActiveTab(tab)
+    const sp = new URLSearchParams(params.toString())
+    sp.set('tab', tab)
+    router.push(`/events?${sp.toString()}`)
+  }
+
+  return (
+    <>
+      <Header />
+      <HeroBanner />
+
+      <div className="bg-[linear-gradient(180deg,rgba(15,23,42,0.03)_0%,rgba(15,23,42,0.00)_100%)]">
+        <div className="pt-10 pb-16">
+          <div className="container max-w-5xl" id="events-list">
+            <Card className="mb-8 border-mainblue/10 shadow-sm">
+              <CardContent className="pt-6">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="flex items-center gap-2">
+                    <Button
+                      variant={activeTab === 'upcoming' ? 'default' : 'outline'}
+                      onClick={() => handleTab('upcoming')}
+                      className={activeTab === 'upcoming' ? 'bg-mainblue' : ''}
+                    >
+                      Upcoming
+                    </Button>
+                    <Button
+                      variant={activeTab === 'past' ? 'default' : 'outline'}
+                      onClick={() => handleTab('past')}
+                      className={activeTab === 'past' ? 'bg-mainblue' : ''}
+                    >
+                      Past
+                    </Button>
+                  </div>
+
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                    <Input
+                      placeholder="Search events…"
+                      value={q}
+                      onChange={(e) => setQ(e.target.value)}
+                      className="w-64"
+                    />
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <Badge variant="secondary" className="flex items-center gap-1 bg-black/80 text-white">
+                        <Filter className="w-3.5 h-3.5" /> Tags
+                      </Badge>
+                      {tagOptions.map((t) => {
+                        const on = activeTags.includes(t)
+                        return (
+                          <Button
+                            key={t}
+                            size="sm"
+                            variant={on ? 'default' : 'outline'}
+                            onClick={() =>
+                              setActiveTags((prev) => (on ? prev.filter((x) => x !== t) : [...prev, t]))
+                            }
+                            className={`capitalize ${on ? 'bg-mainblue' : ''}`}
+                          >
+                            {t}
+                          </Button>
+                        )
+                      })}
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {activeTab === 'upcoming' && (
+              <EventList items={upcoming} emptyMessage="No upcoming events match your filters." />
+            )}
+            {activeTab === 'past' && (
+              <EventList items={past} emptyMessage="No past events found with these filters." />
+            )}
+          </div>
+
+          <PastEventsShowcaseSection />
+        </div>
+      </div>
+    </>
   )
 }

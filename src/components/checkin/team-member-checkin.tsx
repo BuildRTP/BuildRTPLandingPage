@@ -18,6 +18,11 @@ import {
 
 type Step = 'teamPassword' | 'select' | 'memberPassword' | 'success'
 
+// helper to get a message from unknown error
+function getErrMsg(err: unknown, fallback = 'Something went wrong.') {
+  return err instanceof Error ? err.message : fallback
+}
+
 export default function TeamMemberCheckIn() {
   const [step, setStep] = useState<Step>('teamPassword')
 
@@ -59,21 +64,19 @@ export default function TeamMemberCheckIn() {
       setValidatingTeam(true)
       const client = CheckInClient.getInstance()
 
-      // Your app already had this:
       const ok = await client.validateTeamPassword(teamPassword.trim())
       if (!ok) {
         setStatus('Invalid team password.')
         return
       }
 
-      // Load members only after secret is validated to avoid SSR hydration diff
       setLoadingMembers(true)
       const list = await client.getTeamMembers()
       setMembers(Array.isArray(list) ? list.filter(m => m.active) : [])
       setStep('select')
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err)
-      setStatus(err?.message || 'Unable to validate. Check connection.')
+      setStatus(getErrMsg(err, 'Unable to validate. Check connection.'))
     } finally {
       setValidatingTeam(false)
       setLoadingMembers(false)
@@ -106,16 +109,16 @@ export default function TeamMemberCheckIn() {
           password: memberPassword.trim()
         })
       })
-      const data = await res.json()
-      if (!res.ok) {
+      const data: { id?: string; error?: string } = await res.json()
+      if (!res.ok || !data?.id) {
         setStatus(data?.error || 'Check-in failed.')
         return
       }
       setCheckInId(data.id)
       setStep('success')
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err)
-      setStatus(err?.message || 'Network error.')
+      setStatus(getErrMsg(err, 'Network error.'))
     } finally {
       setSubmitting(false)
     }
@@ -131,9 +134,9 @@ export default function TeamMemberCheckIn() {
       } else {
         setStatus('Check-out failed.')
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err)
-      setStatus(err?.message || 'Check-out failed.')
+      setStatus(getErrMsg(err, 'Check-out failed.'))
     }
   }
 
