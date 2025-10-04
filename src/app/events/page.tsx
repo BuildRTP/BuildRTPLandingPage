@@ -277,6 +277,8 @@ function ShowcaseSlider({ images }: { images: string[] }) {
   const go = (d: number) => setIdx((i) => (i + d + total) % total)
 
   return (
+    <>
+    <Header />
     <div className="relative group">
       <div className="relative overflow-hidden rounded-2xl shadow-xl ring-1 ring-black/5">
         <div className="relative aspect-video">
@@ -321,9 +323,10 @@ function ShowcaseSlider({ images }: { images: string[] }) {
           >
             {i + 1}
           </button>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 

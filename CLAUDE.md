@@ -15,6 +15,7 @@ This is a Next.js landing page for BuildRTP, a student-driven organization in th
 - **Icons**: Lucide React
 - **Analytics**: Vercel Analytics
 - **Font**: Montserrat (Google Fonts)
+- **Database**: Airtable (for check-in system)
 
 ## Development Commands
 
@@ -37,6 +38,10 @@ npm run lint
 ```
 src/
 ├── app/                    # Next.js App Router pages
+│   ├── api/               # API routes for check-in system
+│   │   ├── auth/         # Authentication endpoints
+│   │   ├── checkins/     # Check-in CRUD operations
+│   │   └── team-members/ # Team member management
 │   ├── layout.tsx         # Root layout with Montserrat font
 │   ├── page.tsx           # Home page with all main components
 │   └── launchup/          # LaunchUP event detail page
@@ -49,8 +54,13 @@ src/
 │   ├── about-section.tsx # About BuildRTP
 │   ├── sponsors-section.tsx # Sponsor showcase
 │   └── footer.tsx        # Site footer
-└── lib/
-    └── utils.ts          # Utility functions (cn helper)
+├── lib/                   # Utility libraries
+│   ├── utils.ts          # Utility functions (cn helper)
+│   ├── airtable-store.ts # Airtable data operations
+│   ├── checkin-store.ts  # Check-in state management
+│   └── checkin-client.ts # Check-in API client
+└── types/
+    └── checkin.ts        # TypeScript definitions for check-in system
 ```
 
 ## Design System
@@ -71,6 +81,12 @@ src/
 - LaunchUP specific page at `/launchup` with detailed event information
 - Registration links point to external forms (Tally)
 
+### Check-in System
+- Airtable-backed visitor and team member check-in/checkout system
+- API routes for managing check-ins, team members, and authentication
+- Support for visitor, team member, and event-based check-ins
+- Real-time check-in status tracking
+
 ### Navigation
 - Redirect from `/eventproposal` to Google Docs form (configured in `next.config.ts`)
 - Static header navigation
@@ -90,12 +106,29 @@ src/
 - Uses Next.js App Router (not Pages Router)
 - ESLint configured with Next.js and TypeScript rules
 - No testing framework currently configured
-- No custom API routes - purely static content
+- API routes integrated with Airtable for check-in functionality
 - Images stored in `public/` directory
 - Uses path aliases: `@/*` maps to `./src/*`
+- Environment variables required for Airtable integration (not committed to repo)
 
 ## Content Updates
 
 - Event information in `src/app/page.tsx` and `src/app/launchup/page.tsx`
 - Sponsor logos in `public/logos/`
 - Site metadata in `src/app/layout.tsx`
+- Check-in system data models in `src/types/checkin.ts`
+- Airtable configuration in `src/lib/airtable-store.ts`
+
+## API Architecture
+
+The check-in system uses the following API structure:
+- `GET/POST /api/checkins` - Manage check-in records
+- `POST /api/checkins/[id]/checkout` - Handle checkout operations
+- `GET /api/team-members` - Retrieve team member data
+- `POST /api/auth` - Authentication endpoints
+
+Data flows through:
+1. Airtable (external database)
+2. API routes (server-side)
+3. Client-side stores for state management
+4. React components for UI
