@@ -24,7 +24,7 @@ function HeroBanner() {
           BuildRTP Events
         </h1>
         <p className="max-w-2xl mx-auto text-lg md:text-xl mt-4 text-white/90">
-          Here are all of the events we've hosted in the past. Check out our upcoming events below! If you want to plan your own event, reach out to us at <a href="mailto:team@buildrtp.org" className="underline text-white">team@buildrtp.org</a>.
+          Here are all of the events we&apos;ve hosted in the past. Check out our upcoming events below! If you want to plan your own event, reach out to us at <a href="mailto:team@buildrtp.org" className="underline text-white">team@buildrtp.org</a>.
         </p>
 
         {/*
