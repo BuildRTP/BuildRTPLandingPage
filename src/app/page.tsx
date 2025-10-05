@@ -18,7 +18,7 @@ export default function Home() {
           date="Nov 2nd - Dec 14th"
           location="5310 S Alston Ave. STE 200, Durham, NC 27713"
           description="In collaboration with LaunchChapelHill and Innovate Carolina at UNC, we are offering a 6 week accelerator program for high school startups in the RTP area. Join us to get feedback from experts in your industry area, guidance from mentors that have been in your shoes, and opportunities to pitch to investors."
-          signupUrl="https://airtable.com/app9rUWmeWG5sKQ0b/pagKaOdp2kRagqDp7/form"
+          signupUrl="/launchup"
         />
         <AboutSection />
         <SponsorsSection />
