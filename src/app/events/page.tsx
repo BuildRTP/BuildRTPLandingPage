@@ -1,71 +1,8 @@
 'use client'
 
-import { Suspense, useMemo, useState } from 'react'
-import Link from 'next/link'
+import { useState } from 'react'
 import Image from 'next/image'
 import Header from '../../components/header'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Badge } from '@/components/ui/badge'
-import { CalendarDays, Clock, MapPin, Users, Filter, ChevronRight } from 'lucide-react'
-
-/* =====================  TYPES & SAMPLE DATA  ===================== */
-
-export type EventTag = 'workshop' | 'pitch' | 'networking' | 'info' | 'social'
-
-export type EventItem = {
-  id: string
-  title: string
-  description: string
-  date: string
-  startTime?: string
-  endTime?: string
-  location: string
-  tags: EventTag[]
-  capacity?: number
-  rsvps?: number
-}
-
-const SAMPLE_EVENTS: EventItem[] = [
-  {
-    id: 'evt-001',
-    title: 'BuildRTP Kickoff & Founder Meet',
-    description: 'Meet fellow builders, mentors, and learn how to plug into BuildRTP this season.',
-    date: new Date(Date.now() + 1000 * 60 * 60 * 24 * 3).toISOString(),
-    startTime: '6:00 PM',
-    endTime: '7:30 PM',
-    location: 'HQ Atrium, RTP',
-    tags: ['networking', 'info'],
-    capacity: 60,
-    rsvps: 42,
-  },
-  {
-    id: 'evt-002',
-    title: 'LaunchUP Pitch Practice',
-    description: 'Rapid-fire 3-minute pitches with mentor feedback. Slides optional, demos encouraged.',
-    date: new Date(Date.now() + 1000 * 60 * 60 * 24 * 10).toISOString(),
-    startTime: '5:00 PM',
-    endTime: '6:30 PM',
-    location: 'Room B, HQ',
-    tags: ['pitch', 'workshop'],
-    capacity: 30,
-    rsvps: 18,
-  },
-  {
-    id: 'evt-003',
-    title: 'After-Hours Builder Social',
-    description: 'Casual hangout. Bring a project or just vibes. Snacks provided.',
-    date: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7).toISOString(),
-    startTime: '7:00 PM',
-    endTime: '9:00 PM',
-    location: 'The Commons',
-    tags: ['social'],
-    capacity: 50,
-    rsvps: 47,
-  },
-]
 
 /* =====================  HERO  ===================== */
 
@@ -84,12 +21,13 @@ function HeroBanner() {
 
       <div className="relative z-10 text-center px-4">
         <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight drop-shadow-lg">
-          BuildRTP Office Events
+          BuildRTP Events
         </h1>
         <p className="max-w-2xl mx-auto text-lg md:text-xl mt-4 text-white/90">
-          Connect, innovate, and build with entrepreneurs, innovators, and change-makers. See you there!
+          Here are all of the events we've hosted in the past. Check out our upcoming events below! If you want to plan your own event, reach out to us at <a href="mailto:team@buildrtp.org" className="underline text-white">team@buildrtp.org</a>.
         </p>
 
+        {/*
         <div className="mt-6 flex justify-center gap-3 flex-wrap">
           <Link href="/subscribe">
             <Button size="lg" className="bg-mainblue hover:bg-blue-700 text-white shadow">
@@ -106,99 +44,9 @@ function HeroBanner() {
             </Button>
           </a>
         </div>
+        */}
       </div>
     </section>
-  )
-}
-
-/* =====================  EVENT CARDS (moved above use)  ===================== */
-
-function EventList({ items, emptyMessage }: { items: EventItem[]; emptyMessage: string }) {
-  if (!items.length) {
-    return (
-      <Card className="shadow-sm">
-        <CardContent className="py-12 text-center text-gray-500">{emptyMessage}</CardContent>
-      </Card>
-    )
-  }
-
-  return (
-    <div className="container max-w-5xl">
-      <div className="grid md:grid-cols-2 gap-6">
-        {items.map((e) => (
-          <EventCard key={e.id} event={e} />
-        ))}
-      </div>
-    </div>
-  )
-}
-
-function EventCard({ event }: { event: EventItem }) {
-  const date = new Date(event.date)
-  const niceDate = date.toLocaleDateString(undefined, {
-    weekday: 'short',
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-  })
-
-  return (
-    <Card className="shadow-sm border-mainblue/10">
-      <CardHeader>
-        <CardTitle className="flex items-start justify-between gap-4">
-          <span className="text-xl">{event.title}</span>
-          <div className="flex gap-2 flex-wrap">
-            {event.tags.map((t) => (
-              <Badge key={t} className="capitalize bg-black text-white">
-                {t}
-              </Badge>
-            ))}
-          </div>
-        </CardTitle>
-        <CardDescription>{event.description}</CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-3">
-        <div className="flex items-center gap-2 text-sm text-gray-700">
-          <CalendarDays className="w-4 h-4" /> {niceDate}
-        </div>
-        {(event.startTime || event.endTime) && (
-          <div className="flex items-center gap-2 text-sm text-gray-700">
-            <Clock className="w-4 h-4" />
-            <span>
-              {event.startTime}
-              {event.endTime ? ` – ${event.endTime}` : ''}
-            </span>
-          </div>
-        )}
-        <div className="flex items-center gap-2 text-sm text-gray-700">
-          <MapPin className="w-4 h-4" /> {event.location}
-        </div>
-        {(event.capacity || event.rsvps) && (
-          <div className="flex items-center gap-2 text-sm text-gray-700">
-            <Users className="w-4 h-4" />
-            <span>
-              {event.rsvps ?? 0}
-              {event.capacity ? ` / ${event.capacity} spots` : ' RSVPs'}
-            </span>
-          </div>
-        )}
-
-        <div className="my-2 h-px w-full bg-gray-200" />
-
-        <div className="flex gap-2">
-          <Link href={`/events/${event.id}`}>
-            <Button size="sm" className="gap-1 bg-mainblue hover:bg-blue-700 text-white">
-              View Details <ChevronRight className="w-4 h-4" />
-            </Button>
-          </Link>
-          <Link href={`/checkin?type=event&id=${event.id}`}>
-            <Button variant="outline" size="sm" className="gap-1 border-black text-black hover:bg-black/5">
-              Event Check-In
-            </Button>
-          </Link>
-        </div>
-      </CardContent>
-    </Card>
   )
 }
 
@@ -226,6 +74,36 @@ const PAST_EVENTS_SHOWCASE: PastEventShow[] = [
       '/events/past/launchup-3.jpg',
       '/events/past/launchup-4.jpg',
       '/events/past/launchup-5.jpg',
+    ],
+  },
+  {
+    id: 'InnovateHER',
+    title: 'InnovateHer',
+    blurb: [
+      "InnovateHer was BuildRTP's flagship hackathon focused on empowering girls in technology, where high school students bring their innovative ideas to life. Solo founders and teams hack to create a product in 24 hours.",
+      'Ideas ranged from AI tools to social impact initiatives. Our panel of seed investor judges with decades of experience provided targeted feedback to help teams refine their concepts and level up.',
+    ],
+    images: [
+      '/events/past/launchup-1.jpg',
+      '/events/past/launchup-2.jpg',
+      '/events/past/launchup-3.jpg',
+      '/events/past/launchup-4.jpg',
+      '/events/past/launchup-5.jpg',
+    ],
+  },
+  {
+    id: 'scrapyard-2024',
+    title: 'Scrapyard',
+    blurb: [
+      "Scrapyard is BuildRTP's flagship hackathon where high school students bring their innovative ideas to life. Solo founders and teams hack to create a product in 24 hours.",
+      'Ideas ranged from AI tools to social impact initiatives. Our panel of seed investor judges with decades of experience provided targeted feedback to help teams refine their concepts and level up.',
+    ],
+    images: [
+        '/events/past/scrapyard-1.jpg',
+      '/events/past/scrapyard-2.jpg',
+      '/events/past/scrapyard-3.jpg',
+      '/events/past/scrapyard-4.jpg',
+      '/events/past/scrapyard-5.jpg',
     ],
   },
 ]
@@ -277,8 +155,6 @@ function ShowcaseSlider({ images }: { images: string[] }) {
   const go = (d: number) => setIdx((i) => (i + d + total) % total)
 
   return (
-    <>
-    <Header />
     <div className="relative group">
       <div className="relative overflow-hidden rounded-2xl shadow-xl ring-1 ring-black/5">
         <div className="relative aspect-video">
@@ -325,52 +201,13 @@ function ShowcaseSlider({ images }: { images: string[] }) {
           </button>
           ))}
         </div>
-      </div>
-    </>
+    </div>
   )
 }
 
-/* =====================  PAGE (Suspense around search params)  ===================== */
+/* =====================  PAGE  ===================== */
 
 export default function EventsPage() {
-  return (
-    <Suspense fallback={<div className="p-10 text-center">Loading events...</div>}>
-      <EventsPageContent />
-    </Suspense>
-  )
-}
-
-function EventsPageContent() {
-  const router = useRouter()
-  const params = useSearchParams()
-  const initialTab = (params.get('tab') || 'upcoming') as 'upcoming' | 'past'
-
-  const [activeTab, setActiveTab] = useState<'upcoming' | 'past'>(initialTab)
-  const [q, setQ] = useState('')
-  const [activeTags, setActiveTags] = useState<EventTag[]>([])
-
-  const now = new Date()
-  const events = useMemo(() => {
-    const filtered = SAMPLE_EVENTS.filter((e) => {
-      const hay = (e.title + ' ' + e.description + ' ' + e.location).toLowerCase()
-      const matchesQuery = q ? hay.includes(q.toLowerCase()) : true
-      const matchesTags = activeTags.length ? activeTags.every((t) => e.tags.includes(t)) : true
-      return matchesQuery && matchesTags
-    })
-    return filtered.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
-  }, [q, activeTags])
-
-  const upcoming = events.filter((e) => new Date(e.date) >= now)
-  const past = events.filter((e) => new Date(e.date) < now)
-  const tagOptions: EventTag[] = ['workshop', 'pitch', 'networking', 'info', 'social']
-
-  const handleTab = (tab: 'upcoming' | 'past') => {
-    setActiveTab(tab)
-    const sp = new URLSearchParams(params.toString())
-    sp.set('tab', tab)
-    router.push(`/events?${sp.toString()}`)
-  }
-
   return (
     <>
       <Header />
@@ -378,68 +215,6 @@ function EventsPageContent() {
 
       <div className="bg-[linear-gradient(180deg,rgba(15,23,42,0.03)_0%,rgba(15,23,42,0.00)_100%)]">
         <div className="pt-10 pb-16">
-          <div className="container max-w-5xl" id="events-list">
-            <Card className="mb-8 border-mainblue/10 shadow-sm">
-              <CardContent className="pt-6">
-                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                  <div className="flex items-center gap-2">
-                    <Button
-                      variant={activeTab === 'upcoming' ? 'default' : 'outline'}
-                      onClick={() => handleTab('upcoming')}
-                      className={activeTab === 'upcoming' ? 'bg-mainblue' : ''}
-                    >
-                      Upcoming
-                    </Button>
-                    <Button
-                      variant={activeTab === 'past' ? 'default' : 'outline'}
-                      onClick={() => handleTab('past')}
-                      className={activeTab === 'past' ? 'bg-mainblue' : ''}
-                    >
-                      Past
-                    </Button>
-                  </div>
-
-                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-                    <Input
-                      placeholder="Search events…"
-                      value={q}
-                      onChange={(e) => setQ(e.target.value)}
-                      className="w-64"
-                    />
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <Badge variant="secondary" className="flex items-center gap-1 bg-black/80 text-white">
-                        <Filter className="w-3.5 h-3.5" /> Tags
-                      </Badge>
-                      {tagOptions.map((t) => {
-                        const on = activeTags.includes(t)
-                        return (
-                          <Button
-                            key={t}
-                            size="sm"
-                            variant={on ? 'default' : 'outline'}
-                            onClick={() =>
-                              setActiveTags((prev) => (on ? prev.filter((x) => x !== t) : [...prev, t]))
-                            }
-                            className={`capitalize ${on ? 'bg-mainblue' : ''}`}
-                          >
-                            {t}
-                          </Button>
-                        )
-                      })}
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {activeTab === 'upcoming' && (
-              <EventList items={upcoming} emptyMessage="No upcoming events match your filters." />
-            )}
-            {activeTab === 'past' && (
-              <EventList items={past} emptyMessage="No past events found with these filters." />
-            )}
-          </div>
-
           <PastEventsShowcaseSection />
         </div>
       </div>
