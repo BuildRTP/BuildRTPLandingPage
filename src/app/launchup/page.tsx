@@ -4,6 +4,34 @@ import { Calendar, MapPin, Users, Trophy, Clock } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import Link from "next/link"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "LaunchUP Accelerator - BuildRTP",
+  description: "RTP's First Student Startup Accelerator. Join us Nov 2nd - Dec 14th for mentorship, investor support, and up to $5,000 in prizes. Open to all high school students.",
+  openGraph: {
+    title: "LaunchUP Accelerator - BuildRTP",
+    description: "RTP's First Student Startup Accelerator. Join us Nov 2nd - Dec 14th for mentorship, investor support, and up to $5,000 in prizes. Open to all high school students.",
+    url: "https://buildrtp.org/launchup",
+    siteName: "BuildRTP",
+    images: [
+      {
+        url: "/buildrtplogov2.jpg",
+        width: 1200,
+        height: 630,
+        alt: "BuildRTP LaunchUP Accelerator",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "LaunchUP Accelerator - BuildRTP",
+    description: "RTP's First Student Startup Accelerator. Join us Nov 2nd - Dec 14th for mentorship, investor support, and up to $5,000 in prizes.",
+    images: ["/buildrtplogov2.jpg"],
+  },
+}
 
 export default function LaunchUPPage() {
   return (
@@ -14,24 +42,32 @@ export default function LaunchUPPage() {
         <section className="relative bg-gradient-to-br from-mainblue to-secondaryblue py-24">
           <div className="container">
             <div className="text-center text-white">
-              <h1 className="text-4xl md:text-6xl font-bold mb-6">LaunchUP</h1>
-              <p className="text-xl md:text-2xl mb-8 opacity-90">
-                BuildRTP&apos;s Premier Pitch Competition
+              <h1 className="text-4xl md:text-6xl font-bold mb-6">LaunchUP Accelerator</h1>
+              <p className="text-2xl md:text-3xl mb-4 opacity-90">
+                RTP&apos;s First Student Startup Accelerator
               </p>
-              <div className="flex flex-wrap justify-center gap-4 text-lg">
+              <p className="text-lg md:text-xl mb-8 opacity-90">
+                In collaboration with <a href="https://launchchapelhill.com" className="underline text-white">Launch Chapel Hill</a> and <a href="https://innovate.unc.edu" className="underline text-white">Innovate Carolina</a>
+              </p>
+              <div className="flex flex-wrap justify-center gap-4 text-lg mb-8">
                 <div className="flex items-center gap-2">
                   <Calendar className="w-5 h-5" />
-                  <span>Sunday, August 10th</span>
+                  <span>Nov 2nd - Dec 14th</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Clock className="w-5 h-5" />
-                  <span>2:00PM - 6:00PM</span>
+                  <span>Monday 6:30PM - 8:30PM</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <MapPin className="w-5 h-5" />
                   <span>5310 S Alston Ave. STE210, Durham, NC 27713</span>
                 </div>
               </div>
+              <Button size="lg" className="bg-orange hover:bg-secondaryblue text-white text-lg py-6 mt-4">
+                <Link href="https://airtable.com/app9rUWmeWG5sKQ0b/pagKaOdp2kRagqDp7/form" target="_blank" rel="noopener noreferrer">
+                  Register for LaunchUP!
+                </Link>
+              </Button>
             </div>
           </div>
         </section>
@@ -41,43 +77,43 @@ export default function LaunchUPPage() {
           <div className="container">
             <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
               <div>
-                <h2 className="text-3xl font-bold text-mainblue mb-6">What is LaunchUP?</h2>
+                <h2 className="text-3xl font-bold text-mainblue mb-6">What is the LaunchUP Accelerator?</h2>
                 <p className="text-lg text-foreground/80 mb-6">
-                  LaunchUP is BuildRTP&apos;s flagship pitch competition where high school students can bring their innovative ideas to life. Whether you&apos;re a solo entrepreneur or part of a team, this is your chance to present your vision to seed investors who serve as our judges and compete for thousands in prize money.
+                  The LaunchUP Accelerator is BuildRTP&apos;s flagship startup accelerator program where high school students can bring their innovative ideas to life. Whether you&apos;re a solo entrepreneur or part of a team, this is your chance to develop your vision with the help of mentors and seed investors who will provide valuable feedback and support.
                 </p>
-                <p className="text-lg text-foreground/80">
-                  Come with any idea - from tech startups to social impact initiatives. Our panel of seed investor judges with decades of experience will provide valuable feedback to help you refine your concept and take it to the next level. Winners gain direct access to investor support that will help push their company forward and turn their ideas into reality.
+                <p className="text-lg text-foreground/80 mb-6">
+                  Come in with any idea - from tech startups to social impact initiatives. Our team of mentors and investors that have been in your shoes before will provide valuable feedback to help you refine your concept and take it to the next level. Winners gain direct access to investor support that will help push their company forward and turn their ideas into reality.
                 </p>
               </div>
               <div className="space-y-6">
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
-                      <Trophy className="w-5 h-5 text-orange" />
-                      Prize Pool
+                      <Calendar className="w-5 h-5 text-orange" />
+                      Timeline
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-2xl font-bold text-mainblue">Up to $5,000</p>
-                    <p className="text-muted-foreground">Cash prizes across multiple categories</p>
+                    <p className="text-2xl font-bold text-mainblue">Nov 3rd - Dec 12th</p>
+                    <p className="text-muted-foreground">Every Monday from 6:30PM - 8:30PM with a concluding demo day on Dec 14th</p>
                   </CardContent>
                 </Card>
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                       <Users className="w-5 h-5 text-orange" />
-                      Investor Support
+                      Mentors
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-2xl font-bold text-mainblue">Direct Investor Support</p>
-                    <p className="text-muted-foreground">Seed investors help push your company forward</p>
+                    <p className="text-2xl font-bold text-mainblue">Direct Support</p>
+                    <p className="text-muted-foreground">RTP's best and brightest that have been in your shoes before</p>
                   </CardContent>
                 </Card>
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
-                      <Clock className="w-5 h-5 text-orange" />
+                      <Users className="w-5 h-5 text-orange" />
                       Team Size
                     </CardTitle>
                   </CardHeader>
@@ -91,33 +127,60 @@ export default function LaunchUPPage() {
 
             {/* Event Schedule */}
             <div className="mb-16">
-              <h2 className="text-3xl font-bold text-mainblue mb-8 text-center">Event Schedule</h2>
+              <h2 className="text-3xl font-bold text-mainblue mb-8 text-center">Accelerator Schedule</h2>
               <div className="grid md:grid-cols-3 gap-6">
                 <Card>
                   <CardHeader>
-                    <CardTitle>2:00 PM - 2:30 PM</CardTitle>
-                    <CardDescription>Registration & Networking</CardDescription>
+                    <CardTitle>November 3rd</CardTitle>
+                    <CardDescription>Introductions and Exploration into Entrepreneurship</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <p>Check in, meet other participants, and enjoy refreshments while preparing for your pitch.</p>
+                    <p>Check in, meet other participants, and enjoy refreshments while exploring entrepreneurship.</p>
                   </CardContent>
                 </Card>
                 <Card>
                   <CardHeader>
-                    <CardTitle>2:30 PM - 5:00 PM</CardTitle>
-                    <CardDescription>Pitch Presentations</CardDescription>
+                    <CardTitle>November 10th</CardTitle>
+                    <CardDescription>Idea Validation and Refinement</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <p>Present your ideas to our panel of seed investor judges. Each team gets dedicated time to showcase their vision.</p>
+                    <p>Present your ideas to our panel of mentors. Each team gets dedicated time to showcase their vision.</p>
                   </CardContent>
                 </Card>
                 <Card>
                   <CardHeader>
-                    <CardTitle>5:30 PM - 6:00 PM</CardTitle>
-                    <CardDescription>Judging & Awards</CardDescription>
+                    <CardTitle>November 17th</CardTitle>
+                    <CardDescription>Product Development</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <p>Seed investor judges deliberate while participants network. Winners announced and prizes awarded!</p>
+                    <p>Develop your product and get feedback from our mentors.</p>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardHeader>
+                    <CardTitle>November 24th</CardTitle>
+                    <CardDescription>Product Development</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <p>Develop your product and get feedback from our mentors.</p>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardHeader>
+                    <CardTitle>December 1st</CardTitle>
+                    <CardDescription>Product Development</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <p>Develop your product and get feedback from our mentors.</p>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardHeader>
+                    <CardTitle>December 8th</CardTitle>
+                    <CardDescription>Product Development</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <p>Develop your product and get feedback from our mentors.</p>
                   </CardContent>
                 </Card>
               </div>
@@ -149,11 +212,11 @@ export default function LaunchUPPage() {
             <div className="text-center">
               <h2 className="text-3xl font-bold text-mainblue mb-6">Ready to Launch Your Idea?</h2>
               <p className="text-lg text-foreground/80 mb-8 max-w-2xl mx-auto">
-                Don&apos;t miss this opportunity to showcase your innovation, receive feedback from seed investors, compete for up to $5,000 in prizes, and gain direct investor support to push your company forward. Registration is free and open to all high school students.
+                Don&apos;t miss this opportunity to showcase your innovation, receive feedback from mentors, compete for investment, and gain direct professional support to push your company forward. Registration is free and open to all high school students.
               </p>
               <Button size="lg" className="bg-orange hover:bg-secondaryblue text-white text-lg px-8 py-4">
-                <Link href="https://tally.so/r/w40ZJk" target="_blank" rel="noopener noreferrer">
-                  Register for LaunchUP
+                <Link href="https://airtable.com/app9rUWmeWG5sKQ0b/pagKaOdp2kRagqDp7/form" target="_blank" rel="noopener noreferrer">
+                  Register for LaunchUP!
                 </Link>
               </Button>
             </div>
