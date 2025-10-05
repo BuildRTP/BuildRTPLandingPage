@@ -1,6 +1,6 @@
 import Header from "@/components/header"
 import Footer from "@/components/footer"
-import { Calendar, MapPin, Users, Trophy, Clock } from "lucide-react"
+import { Calendar, MapPin, Users, Clock } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import Link from "next/link"
@@ -107,7 +107,7 @@ export default function LaunchUPPage() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-2xl font-bold text-mainblue">Direct Support</p>
-                    <p className="text-muted-foreground">RTP's best and brightest that have been in your shoes before</p>
+                    <p className="text-muted-foreground">RTP&apos;s best and brightest that have been in your shoes before</p>
                   </CardContent>
                 </Card>
                 <Card>
