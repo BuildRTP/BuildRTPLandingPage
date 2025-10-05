@@ -8,10 +8,10 @@ import type { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "LaunchUP Accelerator - BuildRTP",
-  description: "RTP's First Student Startup Accelerator. Join us Nov 2nd - Dec 14th for mentorship, investor support, and up to $5,000 in prizes. Open to all high school students.",
+  description: "RTP's First Student Startup Accelerator. Join us Nov 3rd - Dec 12th for mentorship, investor support, and the chance to grow your startup. Open to all high school students.",
   openGraph: {
     title: "LaunchUP Accelerator - BuildRTP",
-    description: "RTP's First Student Startup Accelerator. Join us Nov 2nd - Dec 14th for mentorship, investor support, and up to $5,000 in prizes. Open to all high school students.",
+    description: "RTP's First Student Startup Accelerator. Join us Nov 3rd - Dec 12th for mentorship, investor support, and the chance to grow your startup. Open to all high school students.",
     url: "https://buildrtp.org/launchup",
     siteName: "BuildRTP",
     images: [
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "LaunchUP Accelerator - BuildRTP",
-    description: "RTP's First Student Startup Accelerator. Join us Nov 2nd - Dec 14th for mentorship, investor support, and up to $5,000 in prizes.",
+    description: "RTP's First Student Startup Accelerator. Join us Nov 3rd - Dec 12th for mentorship, investor support, and the chance to grow your startup.",
     images: ["/buildrtplogov2.jpg"],
   },
 }
@@ -212,7 +212,7 @@ export default function LaunchUPPage() {
             <div className="text-center">
               <h2 className="text-3xl font-bold text-mainblue mb-6">Ready to Launch Your Idea?</h2>
               <p className="text-lg text-foreground/80 mb-8 max-w-2xl mx-auto">
-                Don&apos;t miss this opportunity to showcase your innovation, receive feedback from mentors, compete for investment, and gain direct professional support to push your company forward. Registration is free and open to all high school students.
+                Don&apos;t miss this opportunity to showcase your innovation, receive feedback from mentors, compete for investment, and gain direct professional support to push your company forward. Registration is free and open to all high school students!
               </p>
               <Button size="lg" className="bg-orange hover:bg-secondaryblue text-white text-lg px-8 py-4">
                 <Link href="https://airtable.com/app9rUWmeWG5sKQ0b/pagKaOdp2kRagqDp7/form" target="_blank" rel="noopener noreferrer">
