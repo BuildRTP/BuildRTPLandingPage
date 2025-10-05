@@ -51,12 +51,12 @@ export default function Header() {
             >
               About
             </button>
-            <button
-              onClick={() => scrollToSection("sponsors")}
+            <Link
+              href="/sponsors"
               className="text-gray-600 hover:text-mainblue transition-colors"
             >
               Sponsors
-            </button>
+            </Link>
             <Link
               href="/events"
               className="text-gray-600 hover:text-mainblue transition-colors"
