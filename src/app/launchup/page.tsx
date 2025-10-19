@@ -44,7 +44,7 @@ export default function LaunchUPPage() {
             <div className="text-center text-white">
               <h1 className="text-4xl md:text-6xl font-bold mb-6">LaunchUP Accelerator</h1>
               <p className="text-2xl md:text-3xl mb-4 opacity-90">
-                RTP&apos;s First Student Startup Accelerator
+                RTP&apos;s First High School Student Startup Accelerator
               </p>
               <p className="text-lg md:text-xl mb-8 opacity-90">
                 In collaboration with <a href="https://launchchapelhill.com" className="underline text-white">Launch Chapel Hill</a> and <a href="https://innovate.unc.edu" className="underline text-white">Innovate Carolina</a>
@@ -52,15 +52,22 @@ export default function LaunchUPPage() {
               <div className="flex flex-wrap justify-center gap-4 text-lg mb-8">
                 <div className="flex items-center gap-2">
                   <Calendar className="w-5 h-5" />
-                  <span>Nov 2nd - Dec 14th</span>
+                  <span>Nov 3rd - Dec 12th</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Clock className="w-5 h-5" />
-                  <span>Monday 6:30PM - 8:30PM</span>
+                  <span>Monday 5PM - 7PM</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <MapPin className="w-5 h-5" />
-                  <span>5310 S Alston Ave. STE210, Durham, NC 27713</span>
+                  <a 
+                    href="https://www.google.com/maps/place/Innovate+Carolina+Junction/@35.9143609,-79.0574792,854m/data=!3m1!1e3!4m6!3m5!1s0x89acc357b6c3b4df:0x22d3f4f09ece4102!8m2!3d35.9143164!4d-79.0548735!16s%2Fg%2F11vf1slxl7?entry=ttu&g_ep=EgoyMDI1MTAxNC4wIKXMDSoASAFQAw%3D%3D" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="underline hover:text-orange transition-colors"
+                  >
+                    Innovate Carolina Junction - 136 E Rosemary St, Chapel Hill, NC 27514
+                  </a>
                 </div>
               </div>
               <Button size="lg" className="bg-orange hover:bg-secondaryblue text-white text-lg py-6 mt-4">
@@ -95,7 +102,7 @@ export default function LaunchUPPage() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-2xl font-bold text-mainblue">Nov 3rd - Dec 12th</p>
-                    <p className="text-muted-foreground">Every Monday from 6:30PM - 8:30PM with a concluding demo day on Dec 14th</p>
+                    <p className="text-muted-foreground">Every Monday from 5PM - 7PM with a concluding demo day on Dec 12th</p>
                   </CardContent>
                 </Card>
                 <Card>
@@ -197,9 +204,18 @@ export default function LaunchUPPage() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-lg mb-4">5310 S Alston Ave. STE 200, Durham, NC 27713</p>
+                  <p className="text-lg mb-4">
+                    <a 
+                      href="https://www.google.com/maps/place/Innovate+Carolina+Junction/@35.9143609,-79.0574792,854m/data=!3m1!1e3!4m6!3m5!1s0x89acc357b6c3b4df:0x22d3f4f09ece4102!8m2!3d35.9143164!4d-79.0548735!16s%2Fg%2F11vf1slxl7?entry=ttu&g_ep=EgoyMDI1MTAxNC4wIKXMDSoASAFQAw%3D%3D" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="underline hover:text-orange transition-colors"
+                    >
+                      Innovate Carolina Junction - 136 E Rosemary St, Chapel Hill, NC 27514
+                    </a>
+                  </p>
                   <p className="text-muted-foreground mb-4">
-                    Located in the heart of Research Triangle Park, our office provides the perfect environment for innovation and collaboration.
+                    Located in the heart of Chapel Hill, our venue provides the perfect environment for innovation and collaboration.
                   </p>
                   <p className="text-sm text-muted-foreground">
                     Parking is available on-site. The building is accessible and we&apos;ll have clear signage to guide you to our suite.

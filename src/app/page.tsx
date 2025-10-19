@@ -16,8 +16,8 @@ export default function Home() {
           eventType="STARTUP ACCELERATOR"
           title="LaunchUP Accelerator"
           date="Nov 3rd - Dec 12th"
-          location="5310 S Alston Ave. STE 200, Durham, NC 27713"
-          description="In collaboration with LaunchChapelHill and Innovate Carolina at UNC, we are offering a 6 week accelerator program for high school startups in the RTP area. Join us to get feedback from experts in your industry area, guidance from mentors that have been in your shoes, and opportunities to pitch to investors."
+          location="Innovate Carolina Junction - 136 E Rosemary St, Chapel Hill, NC 27514"
+          description="In collaboration with Launch Chapel Hill and Innovate Carolina at UNC, we are offering a 6 week accelerator program for high school startups in the RTP area. Join us to get feedback from experts in your industry area, guidance from mentors that have been in your shoes, and more opportunities!"
           signupUrl="/launchup"
         />
         <AboutSection />
