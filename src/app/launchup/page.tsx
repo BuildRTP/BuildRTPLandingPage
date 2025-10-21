@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     siteName: "BuildRTP",
     images: [
       {
-        url: "/buildrtplogov2.jpg",
+        url: "/SCR-20251021-pxtl.png",
         width: 1200,
         height: 630,
         alt: "BuildRTP LaunchUP Accelerator",
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "LaunchUP Accelerator - BuildRTP",
     description: "RTP's First Student Startup Accelerator. Join us Nov 3rd - Dec 12th for mentorship, investor support, and the chance to grow your startup.",
-    images: ["/buildrtplogov2.jpg"],
+    images: ["/SCR-20251021-pxtl.png"],
   },
 }
 
