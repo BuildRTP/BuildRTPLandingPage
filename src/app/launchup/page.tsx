@@ -86,10 +86,10 @@ export default function LaunchUPPage() {
               <div>
                 <h2 className="text-3xl font-bold text-mainblue mb-6">What is the LaunchUP Accelerator?</h2>
                 <p className="text-lg text-foreground/80 mb-6">
-                  The LaunchUP Accelerator is BuildRTP&apos;s flagship startup accelerator program where high school students can bring their innovative ideas to life. Whether you&apos;re a solo entrepreneur or part of a team, this is your chance to develop your vision with the help of mentors and seed investors who will provide valuable feedback and support.
+                  The LaunchUP Accelerator is BuildRTP&apos;s flagship startup accelerator program where high school students can bring their innovative ideas to life. Whether you&apos;re a solo entrepreneur or part of a team, this is your chance to develop your vision with the help of mentors who will provide valuable feedback and support.
                 </p>
                 <p className="text-lg text-foreground/80 mb-6">
-                  Come in with any idea - from tech startups to social impact initiatives. Our team of mentors and investors that have been in your shoes before will provide valuable feedback to help you refine your concept and take it to the next level. Winners gain direct access to investor support that will help push their company forward and turn their ideas into reality.
+                  Come in with any idea from tech startups to social impact initiatives. Our team of mentors and investors that have been in your shoes before will provide valuable feedback to help you refine your concept and take it to the next level. Participants gain direct access to investor support that will help push their company forward and turn their ideas into reality.
                 </p>
               </div>
               <div className="space-y-6">
@@ -139,55 +139,55 @@ export default function LaunchUPPage() {
                 <Card>
                   <CardHeader>
                     <CardTitle>November 3rd</CardTitle>
-                    <CardDescription>Introductions and Exploration into Entrepreneurship</CardDescription>
+                    <CardDescription>Introduction</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <p>Check in, meet other participants, and enjoy refreshments while exploring entrepreneurship.</p>
+                    <p>Mixer with a variety of seasoned entrepreneurs, professors, and professionals. RSVP <a href="https://luma.com/w408eecg" target="_blank" rel="noopener noreferrer" className="text-purple-600 underline hover:text-purple-800 transition-colors">here.</a></p>
                   </CardContent>
                 </Card>
                 <Card>
                   <CardHeader>
                     <CardTitle>November 10th</CardTitle>
-                    <CardDescription>Idea Validation and Refinement</CardDescription>
+                    <CardDescription>Ideation</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <p>Present your ideas to our panel of mentors. Each team gets dedicated time to showcase their vision.</p>
+                    <p>Experiment with your idea and get feedback from experienced entrepreneurs.</p>
                   </CardContent>
                 </Card>
                 <Card>
                   <CardHeader>
                     <CardTitle>November 17th</CardTitle>
-                    <CardDescription>Product Development</CardDescription>
+                    <CardDescription>Customer Discovery</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <p>Develop your product and get feedback from our mentors.</p>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader>
-                    <CardTitle>November 24th</CardTitle>
-                    <CardDescription>Product Development</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <p>Develop your product and get feedback from our mentors.</p>
+                    <p>Understand your key customer segments and their needs.</p>
                   </CardContent>
                 </Card>
                 <Card>
                   <CardHeader>
                     <CardTitle>December 1st</CardTitle>
-                    <CardDescription>Product Development</CardDescription>
+                    <CardDescription>Networking</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <p>Develop your product and get feedback from our mentors.</p>
+                    <p>Gain key skills to connect with people and build relationships.</p>
                   </CardContent>
                 </Card>
                 <Card>
                   <CardHeader>
                     <CardTitle>December 8th</CardTitle>
-                    <CardDescription>Product Development</CardDescription>
+                    <CardDescription>Go-To-Market Strategy</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <p>Develop your product and get feedback from our mentors.</p>
+                    <p>Develop a go-to-market strategy and practice your pitch.</p>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardHeader>
+                    <CardTitle>December 12th</CardTitle>
+                    <CardDescription>Demo Day</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <p>Student demo day to mentors and investors in the area.</p>
                   </CardContent>
                 </Card>
               </div>
@@ -200,7 +200,7 @@ export default function LaunchUPPage() {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <MapPin className="w-5 h-5 text-orange" />
-                    BuildRTP Office
+                    Innovate Carolina
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
