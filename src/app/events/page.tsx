@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import Header from '../../components/header'
+import EventCard2 from '../../components/event-card'
 
 /* =====================  HERO  ===================== */
 
@@ -205,6 +206,29 @@ function ShowcaseSlider({ images }: { images: string[] }) {
   )
 }
 
+/* =====================  CURRENT EVENT – SHOWCASE  ===================== */
+
+function CurrentEventShowcaseSection() {
+  return (
+    <section className="-mt-10 pb-6">
+      <div className="container max-w-6xl">
+        <div className="text-center mb-6">
+          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">Current Event</h2>
+          <div className="mx-auto mt-3 h-1 w-28 rounded-full bg-gradient-to-r from-mainblue via-orange-500 to-mainblue" />
+        </div>
+      </div>
+      <EventCard2
+        eventType="Accelerator"
+        title="LaunchUP Accelerator"
+        date="Nov 3rd - Dec 12th"
+        location="Innovate Carolina Junction, Chapel Hill, NC"
+        description="Join RTP's first high school student startup accelerator. Get mentorship, investor support, and grow your startup with weekly sessions leading up to Demo Day."
+        signupUrl="/launchup"
+      />
+    </section>
+  )
+}
+
 /* =====================  PAGE  ===================== */
 
 export default function EventsPage() {
@@ -215,6 +239,7 @@ export default function EventsPage() {
 
       <div className="bg-[linear-gradient(180deg,rgba(15,23,42,0.03)_0%,rgba(15,23,42,0.00)_100%)]">
         <div className="pt-10 pb-16">
+          <CurrentEventShowcaseSection />
           <PastEventsShowcaseSection />
         </div>
       </div>
