@@ -9,23 +9,15 @@ import EventCard2 from '../../components/event-card'
 
 function HeroBanner() {
   return (
-    <section className="relative w-full h-[68vh] md:h-[72vh] flex items-center justify-center text-white">
-      <Image
-        src="/events/hero-bg.jpg"
-        alt="BuildRTP Events Hero"
-        fill
-        priority
-        className="object-cover"
-      />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/55 to-black/70" />
-      <div className="absolute -left-20 -top-24 rotate-6 w-[140%] h-32 bg-mainblue/20 blur-[2px]" />
+    <section className="relative w-full py-12 md:py-16 flex items-center justify-center bg-white">
+      
 
-      <div className="relative z-10 text-center px-4">
-        <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight drop-shadow-lg">
-          BuildRTP Events
+      <div className="relative z-5 text-center px-4">
+        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">
+          Events
         </h1>
-        <p className="max-w-2xl mx-auto text-lg md:text-xl mt-4 text-white/90">
-          Here are all of the events we&apos;ve hosted in the past. Check out our upcoming events below! If you want to plan your own event, reach out to us at <a href="mailto:team@buildrtp.org" className="underline text-white">team@buildrtp.org</a>.
+        <p className="max-w-2xl mx-auto text-base md:text-lg mt-3 text-gray-700">
+          Here are all of the events we&apos;ve hosted in the past. Check out our upcoming events below! If you want to plan your own event, reach out to us at <a href="mailto:team@buildrtp.org" className="underline text-mainblue">team@buildrtp.org</a>.
         </p>
 
         {/*
@@ -63,11 +55,11 @@ type PastEventShow = {
 /** Only LaunchUP (Summer Social removed) */
 const PAST_EVENTS_SHOWCASE: PastEventShow[] = [
   {
-    id: 'launchup-2024',
-    title: 'LaunchUP',
+    id: 'launchup-pitch-competition',
+    title: 'LaunchUP Pitch Competition',
     blurb: [
-      "LaunchUP is BuildRTP's flagship pitch competition where high school students bring their innovative ideas to life. Solo founders and teams pitch to seed investors who serve as judges and compete for thousands in prize money.",
-      'Ideas ranged from AI tools to social impact initiatives. Our panel of seed investor judges with decades of experience provided targeted feedback to help teams refine their concepts and level up.',
+      "The LaunchUP Pitch Competition was hosted by BuildRTP to showcase some of the best student startups in the RTP area. Ideas ranged from AI tools, social impact initiatives, and even hardware devices. ",
+      "With 22 teams competing and 75+ participants, our judge panel of experienced entrepreneurs was able to give out $5,000 in non-dilutive funding to the top 3 teams."
     ],
     images: [
       '/events/past/launchup-1.jpg',
@@ -81,7 +73,7 @@ const PAST_EVENTS_SHOWCASE: PastEventShow[] = [
     id: 'InnovateHER',
     title: 'InnovateHer',
     blurb: [
-      "InnovateHer was BuildRTP's flagship hackathon focused on empowering girls in technology, where high school students bring their innovative ideas to life. Solo founders and teams hack to create a product in 24 hours.",
+      "InnovateHer was a BuildRTP hackathon focused on empowering girls in technology. Sponsered by Fidelity Investments, we were ",
       'Ideas ranged from AI tools to social impact initiatives. Our panel of seed investor judges with decades of experience provided targeted feedback to help teams refine their concepts and level up.',
     ],
     images: [
@@ -210,21 +202,24 @@ function ShowcaseSlider({ images }: { images: string[] }) {
 
 function CurrentEventShowcaseSection() {
   return (
-    <section className="-mt-10 pb-6">
+    <section className="-mt-10 pb-12 md:pb-16">
       <div className="container max-w-6xl">
-        <div className="text-center mb-6">
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">Current Event</h2>
+        <div className="text-center mb-10 md:mb-12">
+          <h2 className="text-3xl sm:text-4xl pt-8
+           font-extrabold tracking-tight">Currently Running </h2>
           <div className="mx-auto mt-3 h-1 w-28 rounded-full bg-gradient-to-r from-mainblue via-orange-500 to-mainblue" />
         </div>
+        <div className="px-4 md:px-6">
+        <EventCard2
+          eventType="STARTUP ACCELERATOR"
+          title="LaunchUP Accelerator"
+          date="Nov 3rd - Dec 12th"
+          location="Innovate Carolina Junction - 136 E Rosemary St, Chapel Hill, NC 27514"
+          description="In collaboration with Launch Chapel Hill and Innovate Carolina at UNC, we are offering a 6 week accelerator program for high school startups in the RTP area. Join us to get feedback from experts in your industry area, guidance from mentors that have been in your shoes, and more opportunities!"
+          signupUrl="/launchup"
+        />
+        </div>
       </div>
-      <EventCard2
-        eventType="Accelerator"
-        title="LaunchUP Accelerator"
-        date="Nov 3rd - Dec 12th"
-        location="Innovate Carolina Junction, Chapel Hill, NC"
-        description="Join RTP's first high school student startup accelerator. Get mentorship, investor support, and grow your startup with weekly sessions leading up to Demo Day."
-        signupUrl="/launchup"
-      />
     </section>
   )
 }
